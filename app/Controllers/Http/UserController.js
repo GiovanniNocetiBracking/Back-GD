@@ -1,5 +1,6 @@
 'use strict'
 
+const Mail = use('Mail')
 const User = use('App/Models/User') 
 
 class UserController {
@@ -10,6 +11,19 @@ class UserController {
   
   async create ({ request, response, view }) {
     
+  }
+  async contactUs ({request}){
+    try {
+      const {name, email, subject, message } = request.all()
+      await Mail.send('email', request.toJSON(), (message) => {
+        message
+        .to(email)
+        .from('giovanni.noceti@gmail.com')
+        .subject(subject)
+    })
+    } catch (error) {
+      
+    }
   }
 
   async login ({ request, auth, response}){
@@ -51,7 +65,7 @@ class UserController {
    
   
   async show ({ params, request, response, view }) {
-    console.log('esto no hace nada')
+    
   }
  
   async edit ({ params, request, response, view }) {
