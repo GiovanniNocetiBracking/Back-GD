@@ -51,6 +51,7 @@ class UserController {
    
   
   async show ({ params, request, response, view }) {
+    console.log('esto no hace nada')
   }
  
   async edit ({ params, request, response, view }) {
