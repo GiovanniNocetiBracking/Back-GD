@@ -15,14 +15,18 @@ class UserController {
   async contactUs ({request}){
     try {
       const {name, email, subject, message } = request.all()
-      await Mail.send('email', request.toJSON(), (message) => {
+      const data = request.body
+
+      await Mail.send('email', data, (message) => {
         message
-        .to(email)
-        .from('giovanni.noceti@gmail.com')
-        .subject(subject)
-    })
+          .to('giovanni.noceti@gmail.com')
+          .from('giovanni.noceti@gmail.com')
+          .subject(subject)
+      })
+   
+    return console.log(data)
     } catch (error) {
-      
+      console.log('hubo un error ' + error)
     }
   }
 
