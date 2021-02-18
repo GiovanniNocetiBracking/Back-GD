@@ -72,17 +72,20 @@ class UserController {
     const rules = {
       email: 'required|email|unique:users, email',       
     }
-    const validation = await validate(request.only('email'), rules)
+    const messages = {
+      'email.unique': 'El correo ingresado ya esta suscrito'
+    }
+    const validation = await validate(request.only('email'), rules, messages)
     if (validation.fails()) { 
-        return console.log(validation)
+        return response.json(validation)
     }     
     const newSuscriber = await User.create({
       email,
       suscribe 
     }) 
-      return console.log(newSuscriber.$attributes)       
+      return response.json(newSuscriber)       
     }catch(e){
-      return console.log(request.body)
+      return response.json(e.message)
     }
   }
   

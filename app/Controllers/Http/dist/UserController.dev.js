@@ -176,7 +176,7 @@ function () {
   }, {
     key: "suscribe",
     value: function suscribe(_ref4) {
-      var request, response, _request$all4, email, suscribe, rules, validation, newSuscriber;
+      var request, response, _request$all4, email, suscribe, rules, messages, validation, newSuscriber;
 
       return regeneratorRuntime.async(function suscribe$(_context4) {
         while (1) {
@@ -188,41 +188,44 @@ function () {
               rules = {
                 email: 'required|email|unique:users, email'
               };
-              _context4.next = 6;
-              return regeneratorRuntime.awrap(validate(request.only('email'), rules));
+              messages = {
+                'email.unique': 'El correo ingresado ya esta suscrito'
+              };
+              _context4.next = 7;
+              return regeneratorRuntime.awrap(validate(request.only('email'), rules, messages));
 
-            case 6:
+            case 7:
               validation = _context4.sent;
 
               if (!validation.fails()) {
-                _context4.next = 9;
+                _context4.next = 10;
                 break;
               }
 
-              return _context4.abrupt("return", console.log(validation));
+              return _context4.abrupt("return", response.json(validation));
 
-            case 9:
-              _context4.next = 11;
+            case 10:
+              _context4.next = 12;
               return regeneratorRuntime.awrap(User.create({
                 email: email,
                 suscribe: suscribe
               }));
 
-            case 11:
+            case 12:
               newSuscriber = _context4.sent;
-              return _context4.abrupt("return", console.log(newSuscriber.$attributes));
+              return _context4.abrupt("return", response.json(newSuscriber));
 
-            case 15:
-              _context4.prev = 15;
+            case 16:
+              _context4.prev = 16;
               _context4.t0 = _context4["catch"](1);
-              return _context4.abrupt("return", console.log(request.body));
+              return _context4.abrupt("return", response.json(_context4.t0.message));
 
-            case 18:
+            case 19:
             case "end":
               return _context4.stop();
           }
         }
-      }, null, null, [[1, 15]]);
+      }, null, null, [[1, 16]]);
     }
   }]);
 
