@@ -3,6 +3,7 @@
 const Mail = use('Mail')
 const User = use('App/Models/User')
 const { validate } = use('Validator') 
+const Hash = use('Hash')
 
 class UserController {  
   async contactUs ({request}){
@@ -16,8 +17,8 @@ class UserController {
         message: 'required'
       }
       const validation = await validate(request.all(), rules)
-      if (validation.fails()) {  
-          return console.log(validation)
+      if (validation.fails()) {
+          return response.json(Validation)
       }else{
       await Mail.send('email', data, (message) => {
         message
@@ -56,16 +57,25 @@ class UserController {
     }
     const validation = await validate(request.all(), rules)
     if (validation.fails()) { 
-        return console.log(validation)
-    }
+      const userRepeat = await User.query()
+      .select('id')
+      .where('email', email)
+      .from('users')
+      .update({
+        password : await Hash.make(password),
+        username : username
+      })     
+      return response.json({"registrado" : "El usuario se a registrado con exito"})
+    }else{
     await User.create({
       email,
       password,
       username,
       suscribe
     })
-      return console.log(request.body)
+      return response.json({"registrado" : "El usuario se a registrado con exito"})
   }
+}
   async suscribe({request, response}){
     try{
     const {email, suscribe} = request.all()      
@@ -76,8 +86,21 @@ class UserController {
       'email.unique': 'El correo ingresado ya esta suscrito'
     }
     const validation = await validate(request.only('email'), rules, messages)
-    if (validation.fails()) { 
+    if (validation.fails()) {       
+      const userRepeat = await User.query()
+      .select('id', 'suscribe')
+      .where('email', email)
+      .from('users')
+      .first() 
+      const user = await User.find(userRepeat.id)
+      if(userRepeat.suscribe == 0){
+        user.suscribe = 1
+        user.save()
+        return response.json({"suscrito" : "El usuario ahora esta suscrito"} )
+      }else{
         return response.json(validation)
+      }
+        
     }     
     const newSuscriber = await User.create({
       email,

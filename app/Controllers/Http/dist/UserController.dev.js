@@ -12,6 +12,8 @@ var User = use('App/Models/User');
 var _use = use('Validator'),
     validate = _use.validate;
 
+var Hash = use('Hash');
+
 var UserController =
 /*#__PURE__*/
 function () {
@@ -49,7 +51,7 @@ function () {
                 break;
               }
 
-              return _context.abrupt("return", console.log(validation));
+              return _context.abrupt("return", response.json(Validation));
 
             case 12:
               _context.next = 14;
@@ -128,7 +130,7 @@ function () {
   }, {
     key: "store",
     value: function store(_ref3) {
-      var request, response, _request$all3, email, password, username, suscribe, rules, validation;
+      var request, response, _request$all3, email, password, username, suscribe, rules, validation, userRepeat;
 
       return regeneratorRuntime.async(function store$(_context3) {
         while (1) {
@@ -148,14 +150,34 @@ function () {
               validation = _context3.sent;
 
               if (!validation.fails()) {
-                _context3.next = 8;
+                _context3.next = 21;
                 break;
               }
 
-              return _context3.abrupt("return", console.log(validation));
+              _context3.t0 = regeneratorRuntime;
+              _context3.t1 = User.query().select('id').where('email', email).from('users');
+              _context3.next = 11;
+              return regeneratorRuntime.awrap(Hash.make(password));
 
-            case 8:
-              _context3.next = 10;
+            case 11:
+              _context3.t2 = _context3.sent;
+              _context3.t3 = username;
+              _context3.t4 = {
+                password: _context3.t2,
+                username: _context3.t3
+              };
+              _context3.t5 = _context3.t1.update.call(_context3.t1, _context3.t4);
+              _context3.next = 17;
+              return _context3.t0.awrap.call(_context3.t0, _context3.t5);
+
+            case 17:
+              userRepeat = _context3.sent;
+              return _context3.abrupt("return", response.json({
+                "registrado": "El usuario se a registrado con exito"
+              }));
+
+            case 21:
+              _context3.next = 23;
               return regeneratorRuntime.awrap(User.create({
                 email: email,
                 password: password,
@@ -163,10 +185,12 @@ function () {
                 suscribe: suscribe
               }));
 
-            case 10:
-              return _context3.abrupt("return", console.log(request.body));
+            case 23:
+              return _context3.abrupt("return", response.json({
+                "registrado": "El usuario se a registrado con exito"
+              }));
 
-            case 11:
+            case 24:
             case "end":
               return _context3.stop();
           }
@@ -176,7 +200,7 @@ function () {
   }, {
     key: "suscribe",
     value: function suscribe(_ref4) {
-      var request, response, _request$all4, email, suscribe, rules, messages, validation, newSuscriber;
+      var request, response, _request$all4, email, suscribe, rules, messages, validation, userRepeat, user, newSuscriber;
 
       return regeneratorRuntime.async(function suscribe$(_context4) {
         while (1) {
@@ -198,34 +222,57 @@ function () {
               validation = _context4.sent;
 
               if (!validation.fails()) {
-                _context4.next = 10;
+                _context4.next = 22;
                 break;
               }
 
+              _context4.next = 11;
+              return regeneratorRuntime.awrap(User.query().select('id', 'suscribe').where('email', email).from('users').first());
+
+            case 11:
+              userRepeat = _context4.sent;
+              _context4.next = 14;
+              return regeneratorRuntime.awrap(User.find(userRepeat.id));
+
+            case 14:
+              user = _context4.sent;
+
+              if (!(userRepeat.suscribe == 0)) {
+                _context4.next = 21;
+                break;
+              }
+
+              user.suscribe = 1;
+              user.save();
+              return _context4.abrupt("return", response.json({
+                "suscrito": "El usuario ahora esta suscrito"
+              }));
+
+            case 21:
               return _context4.abrupt("return", response.json(validation));
 
-            case 10:
-              _context4.next = 12;
+            case 22:
+              _context4.next = 24;
               return regeneratorRuntime.awrap(User.create({
                 email: email,
                 suscribe: suscribe
               }));
 
-            case 12:
+            case 24:
               newSuscriber = _context4.sent;
               return _context4.abrupt("return", response.json(newSuscriber));
 
-            case 16:
-              _context4.prev = 16;
+            case 28:
+              _context4.prev = 28;
               _context4.t0 = _context4["catch"](1);
               return _context4.abrupt("return", response.json(_context4.t0.message));
 
-            case 19:
+            case 31:
             case "end":
               return _context4.stop();
           }
         }
-      }, null, null, [[1, 16]]);
+      }, null, null, [[1, 28]]);
     }
   }]);
 
