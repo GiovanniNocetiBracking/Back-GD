@@ -22,162 +22,122 @@ function () {
   }
 
   _createClass(UserController, [{
-    key: "contactUs",
-    value: function contactUs(_ref) {
-      var request, _request$all, name, email, subject, message, data, rules, validation;
+    key: "login",
 
-      return regeneratorRuntime.async(function contactUs$(_context) {
+    /* ---------------------------------------------LOGIN-------------------------------------------- */
+    value: function login(_ref) {
+      var request, auth, response, _request$all, email, password, rules, messages, validation, token;
+
+      return regeneratorRuntime.async(function login$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              request = _ref.request;
+              request = _ref.request, auth = _ref.auth, response = _ref.response;
               _context.prev = 1;
-              _request$all = request.all(), name = _request$all.name, email = _request$all.email, subject = _request$all.subject, message = _request$all.message;
-              data = request.body;
+              _request$all = request.all(), email = _request$all.email, password = _request$all.password;
               rules = {
                 email: 'required|email',
-                name: 'required',
-                subject: 'required',
-                message: 'required'
+                password: 'required'
+              };
+              messages = {
+                'email.email': 'Por favor ingrese un email valido',
+                'email.required': 'El campo email es obligatorio',
+                'password.required': 'El campo contraseña es obligatorio'
               };
               _context.next = 7;
-              return regeneratorRuntime.awrap(validate(request.all(), rules));
+              return regeneratorRuntime.awrap(validate(request.all(), rules, messages));
 
             case 7:
               validation = _context.sent;
 
               if (!validation.fails()) {
-                _context.next = 12;
+                _context.next = 10;
                 break;
               }
 
-              return _context.abrupt("return", response.json(Validation));
+              return _context.abrupt("return", response.json(validation));
+
+            case 10:
+              _context.next = 12;
+              return regeneratorRuntime.awrap(auth.attempt(email, password));
 
             case 12:
-              _context.next = 14;
-              return regeneratorRuntime.awrap(Mail.send('email', data, function (message) {
-                message.to('giovanni.noceti@gmail.com').from('giovanni.noceti@gmail.com').subject(subject);
-              }));
+              token = _context.sent;
+              return _context.abrupt("return", response.json(token));
 
-            case 14:
-              return _context.abrupt("return", console.log(data));
-
-            case 15:
-              _context.next = 20;
-              break;
-
-            case 17:
-              _context.prev = 17;
+            case 16:
+              _context.prev = 16;
               _context.t0 = _context["catch"](1);
-              console.log(_context.t0);
+              return _context.abrupt("return", response.json(_context.t0.message));
 
-            case 20:
+            case 19:
             case "end":
               return _context.stop();
           }
         }
-      }, null, null, [[1, 17]]);
+      }, null, null, [[1, 16]]);
     }
-  }, {
-    key: "login",
-    value: function login(_ref2) {
-      var request, auth, response, _request$all2, email, password, rules, validation, token;
+    /* -------------------------------------------REGISTER----------------------------------------- */
 
-      return regeneratorRuntime.async(function login$(_context2) {
+  }, {
+    key: "store",
+    value: function store(_ref2) {
+      var request, response, _request$all2, email, password, username, suscribe, rules, messages, validation, userRepeat, newUser;
+
+      return regeneratorRuntime.async(function store$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              request = _ref2.request, auth = _ref2.auth, response = _ref2.response;
-              _context2.prev = 1;
-              _request$all2 = request.all(), email = _request$all2.email, password = _request$all2.password;
-              rules = {
-                email: 'required|email',
-                password: 'required'
-              };
-              _context2.next = 6;
-              return regeneratorRuntime.awrap(validate(request.all(), rules));
-
-            case 6:
-              validation = _context2.sent;
-
-              if (!validation.fails()) {
-                _context2.next = 9;
-                break;
-              }
-
-              return _context2.abrupt("return", console.log(validation));
-
-            case 9:
-              _context2.next = 11;
-              return regeneratorRuntime.awrap(auth.attempt(email, password));
-
-            case 11:
-              token = _context2.sent;
-              return _context2.abrupt("return", console.log(token));
-
-            case 15:
-              _context2.prev = 15;
-              _context2.t0 = _context2["catch"](1);
-              return _context2.abrupt("return", response.json(_context2.t0.message));
-
-            case 18:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, null, null, [[1, 15]]);
-    }
-  }, {
-    key: "store",
-    value: function store(_ref3) {
-      var request, response, _request$all3, email, password, username, suscribe, rules, validation, userRepeat;
-
-      return regeneratorRuntime.async(function store$(_context3) {
-        while (1) {
-          switch (_context3.prev = _context3.next) {
-            case 0:
-              request = _ref3.request, response = _ref3.response;
-              _request$all3 = request.all(), email = _request$all3.email, password = _request$all3.password, username = _request$all3.username, suscribe = _request$all3.suscribe;
+              request = _ref2.request, response = _ref2.response;
+              _request$all2 = request.all(), email = _request$all2.email, password = _request$all2.password, username = _request$all2.username, suscribe = _request$all2.suscribe;
               rules = {
                 email: 'required|email|unique:users,email',
                 password: 'required',
                 username: 'required'
               };
-              _context3.next = 5;
-              return regeneratorRuntime.awrap(validate(request.all(), rules));
+              messages = {
+                'email.unique': 'El correo ingresado ya esta registrado',
+                'email.required': 'El campo correo es obligatorio',
+                'email.email': 'El email ingresado no es valido',
+                'password.required': 'El campo contraseña es obligatorio',
+                'username.required': 'El campo nombre es obligatorio'
+              };
+              _context2.next = 6;
+              return regeneratorRuntime.awrap(validate(request.all(), rules, messages));
 
-            case 5:
-              validation = _context3.sent;
+            case 6:
+              validation = _context2.sent;
+              _context2.prev = 7;
 
               if (!validation.fails()) {
-                _context3.next = 21;
+                _context2.next = 23;
                 break;
               }
 
-              _context3.t0 = regeneratorRuntime;
-              _context3.t1 = User.query().select('id').where('email', email).from('users');
-              _context3.next = 11;
+              _context2.t0 = regeneratorRuntime;
+              _context2.t1 = User.query().select('id').where('email', email).from('users');
+              _context2.next = 13;
               return regeneratorRuntime.awrap(Hash.make(password));
 
-            case 11:
-              _context3.t2 = _context3.sent;
-              _context3.t3 = username;
-              _context3.t4 = {
-                password: _context3.t2,
-                username: _context3.t3
+            case 13:
+              _context2.t2 = _context2.sent;
+              _context2.t3 = username;
+              _context2.t4 = {
+                password: _context2.t2,
+                username: _context2.t3
               };
-              _context3.t5 = _context3.t1.update.call(_context3.t1, _context3.t4);
-              _context3.next = 17;
-              return _context3.t0.awrap.call(_context3.t0, _context3.t5);
+              _context2.t5 = _context2.t1.update.call(_context2.t1, _context2.t4);
+              _context2.next = 19;
+              return _context2.t0.awrap.call(_context2.t0, _context2.t5);
 
-            case 17:
-              userRepeat = _context3.sent;
-              return _context3.abrupt("return", response.json({
+            case 19:
+              userRepeat = _context2.sent;
+              return _context2.abrupt("return", response.json([validation, {
                 "registrado": "El usuario se a registrado con exito"
-              }));
+              }]));
 
-            case 21:
-              _context3.next = 23;
+            case 23:
+              _context2.next = 25;
               return regeneratorRuntime.awrap(User.create({
                 email: email,
                 password: password,
@@ -185,18 +145,96 @@ function () {
                 suscribe: suscribe
               }));
 
-            case 23:
-              return _context3.abrupt("return", response.json({
+            case 25:
+              newUser = _context2.sent;
+              return _context2.abrupt("return", response.json([newUser, {
                 "registrado": "El usuario se a registrado con exito"
+              }]));
+
+            case 27:
+              _context2.next = 32;
+              break;
+
+            case 29:
+              _context2.prev = 29;
+              _context2.t6 = _context2["catch"](7);
+              return _context2.abrupt("return", response.json(eroor));
+
+            case 32:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, null, null, [[7, 29]]);
+    }
+    /* -------------------------------------------- CONTACT US ------------------------------------- */
+
+  }, {
+    key: "contactUs",
+    value: function contactUs(_ref3) {
+      var request, _request$all3, name, email, subject, message, data, rules, messages, validation;
+
+      return regeneratorRuntime.async(function contactUs$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              request = _ref3.request;
+              _context3.prev = 1;
+              _request$all3 = request.all(), name = _request$all3.name, email = _request$all3.email, subject = _request$all3.subject, message = _request$all3.message;
+              data = request.body;
+              rules = {
+                email: 'required|email',
+                name: 'required',
+                subject: 'required',
+                message: 'required'
+              };
+              messages = {
+                'email.email': 'Por favor ingrese un email valido',
+                'email.required': 'El campo email es obligatorio',
+                'name.required': 'El campo nombre es obligatorio',
+                'subject.required': 'El campo asunto es obligatorio',
+                'message.required': 'El campo mensaje es obligatorio'
+              };
+              _context3.next = 8;
+              return regeneratorRuntime.awrap(validate(request.all(), rules, messages));
+
+            case 8:
+              validation = _context3.sent;
+
+              if (!validation.fails()) {
+                _context3.next = 13;
+                break;
+              }
+
+              return _context3.abrupt("return", response.json(Validation));
+
+            case 13:
+              _context3.next = 15;
+              return regeneratorRuntime.awrap(Mail.send('email', data, function (message) {
+                message.to('giovanni.noceti@gmail.com').from('giovanni.noceti@gmail.com').subject(subject);
               }));
 
-            case 24:
+            case 15:
+              return _context3.abrupt("return", console.log(data));
+
+            case 16:
+              _context3.next = 21;
+              break;
+
+            case 18:
+              _context3.prev = 18;
+              _context3.t0 = _context3["catch"](1);
+              console.log(_context3.t0);
+
+            case 21:
             case "end":
               return _context3.stop();
           }
         }
-      });
+      }, null, null, [[1, 18]]);
     }
+    /* ---------------------------------------------SUSCRIBE-------------------------------------- */
+
   }, {
     key: "suscribe",
     value: function suscribe(_ref4) {
@@ -213,7 +251,9 @@ function () {
                 email: 'required|email|unique:users, email'
               };
               messages = {
-                'email.unique': 'El correo ingresado ya esta suscrito'
+                'email.unique': 'El correo ingresado ya esta suscrito',
+                'email.required': 'El campo correo es obligatorio',
+                'email.email': 'El email ingresado es invalido'
               };
               _context4.next = 7;
               return regeneratorRuntime.awrap(validate(request.only('email'), rules, messages));
