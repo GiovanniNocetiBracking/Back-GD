@@ -1,10 +1,11 @@
-'use strict'
+"use strict";
 
-const Route = use('Route')
+const Route = use("Route");
 
-Route.group(() =>{
-  Route.post('auth/register', 'UserController.store')  
-  Route.post('auth/login', 'UserController.login')  
-  Route.post('landing/suscribe', 'UserController.suscribe')
-  Route.post('landing/contactUs', 'UserController.contactUs')
-}).prefix('api')
+Route.group(() => {
+  Route.post("auth/register", "UserController.store");
+  Route.post("auth/login", "UserController.login");
+  Route.post("landing/suscribe", "UserController.suscribe");
+  Route.post("landing/contactUs", "UserController.contactUs");
+  Route.post("dashboard/arduinoSensor", "UserController.arduinoSensor");
+}).prefix("api");
