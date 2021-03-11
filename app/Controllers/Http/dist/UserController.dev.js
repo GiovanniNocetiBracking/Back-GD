@@ -339,8 +339,9 @@ function () {
             case 9:
               _context5.prev = 9;
               _context5.t0 = _context5["catch"](1);
+              return _context5.abrupt("return", response.json(_context5.t0.message));
 
-            case 11:
+            case 12:
             case "end":
               return _context5.stop();
           }

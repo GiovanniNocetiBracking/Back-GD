@@ -154,7 +154,9 @@ class UserController {
         sensor,
       });
       return response.json(data);
-    } catch (error) {}
+    } catch (error) {
+      return response.json(error.message);
+    }
   }
 }
 
