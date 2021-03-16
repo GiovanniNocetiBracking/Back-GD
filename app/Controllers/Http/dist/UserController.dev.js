@@ -159,7 +159,7 @@ function () {
             case 29:
               _context2.prev = 29;
               _context2.t6 = _context2["catch"](7);
-              return _context2.abrupt("return", response.json(eroor));
+              return _context2.abrupt("return", response.json(_context2.t6));
 
             case 32:
             case "end":
@@ -173,13 +173,13 @@ function () {
   }, {
     key: "contactUs",
     value: function contactUs(_ref3) {
-      var request, _request$all3, name, email, subject, message, data, rules, messages, validation;
+      var request, response, _request$all3, name, email, subject, message, data, rules, messages, validation;
 
       return regeneratorRuntime.async(function contactUs$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              request = _ref3.request;
+              request = _ref3.request, response = _ref3.response;
               _context3.prev = 1;
               _request$all3 = request.all(), name = _request$all3.name, email = _request$all3.email, subject = _request$all3.subject, message = _request$all3.message;
               data = request.body;

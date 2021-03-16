@@ -1,5 +1,4 @@
 "use strict";
-
 /*
 |--------------------------------------------------------------------------
 | Http server
@@ -17,10 +16,7 @@
 |     Make sure to pass a relative path from the project root.
 */
 
-const { Ignitor } = require("@adonisjs/ignitor");
+var _require = require("@adonisjs/ignitor"),
+    Ignitor = _require.Ignitor;
 
-new Ignitor(require("@adonisjs/fold"))
-  .appRoot(__dirname)
-  .wsServer()
-  .fireHttpServer()
-  .catch(console.error);
+new Ignitor(require("@adonisjs/fold")).appRoot(__dirname).wsServer().fireHttpServer()["catch"](console.error);

@@ -73,11 +73,11 @@ class UserController {
         ]);
       }
     } catch (error) {
-      return response.json(eroor);
+      return response.json(error);
     }
   }
   /* -------------------------------------------- CONTACT US ------------------------------------- */
-  async contactUs({ request }) {
+  async contactUs({ request, response }) {
     try {
       const { name, email, subject, message } = request.all();
       const data = request.body;

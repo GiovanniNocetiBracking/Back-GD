@@ -1,5 +1,4 @@
 "use strict";
-
 /*
 |--------------------------------------------------------------------------
 | Providers
@@ -10,18 +9,8 @@
 | provider here.
 |
 */
-const providers = [
-  "@adonisjs/framework/providers/AppProvider",
-  "@adonisjs/auth/providers/AuthProvider",
-  "@adonisjs/bodyparser/providers/BodyParserProvider",
-  "@adonisjs/cors/providers/CorsProvider",
-  "@adonisjs/lucid/providers/LucidProvider",
-  "@adonisjs/mail/providers/MailProvider",
-  "@adonisjs/framework/providers/ViewProvider",
-  "@adonisjs/validator/providers/ValidatorProvider",
-  "@adonisjs/websocket/providers/WsProvider",
-];
 
+var providers = ["@adonisjs/framework/providers/AppProvider", "@adonisjs/auth/providers/AuthProvider", "@adonisjs/bodyparser/providers/BodyParserProvider", "@adonisjs/cors/providers/CorsProvider", "@adonisjs/lucid/providers/LucidProvider", "@adonisjs/mail/providers/MailProvider", "@adonisjs/framework/providers/ViewProvider", "@adonisjs/validator/providers/ValidatorProvider", "@adonisjs/websocket/providers/WsProvider"];
 /*
 |--------------------------------------------------------------------------
 | Ace Providers
@@ -31,8 +20,8 @@ const providers = [
 | Providers for migrations, tests etc.
 |
 */
-const aceProviders = ["@adonisjs/lucid/providers/MigrationsProvider"];
 
+var aceProviders = ["@adonisjs/lucid/providers/MigrationsProvider"];
 /*
 |--------------------------------------------------------------------------
 | Aliases
@@ -45,8 +34,8 @@ const aceProviders = ["@adonisjs/lucid/providers/MigrationsProvider"];
 |   { Route: 'Adonis/Src/Route' }
 |
 */
-const aliases = {};
 
+var aliases = {};
 /*
 |--------------------------------------------------------------------------
 | Commands
@@ -55,6 +44,11 @@ const aliases = {};
 | Here you store ace commands for your package
 |
 */
-const commands = [];
 
-module.exports = { providers, aceProviders, aliases, commands };
+var commands = [];
+module.exports = {
+  providers: providers,
+  aceProviders: aceProviders,
+  aliases: aliases,
+  commands: commands
+};
