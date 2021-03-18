@@ -27,6 +27,7 @@
     "@adonisjs/mail": "^3.0.10",
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/websocket": "^1.0.12",
+    "ignitor": "^1.0.1",
     "mysql": "^2.18.1",
     "url-parse": "^1.4.7"
   },

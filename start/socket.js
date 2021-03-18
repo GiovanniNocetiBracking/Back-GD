@@ -15,4 +15,4 @@
 
 const Ws = use("Ws");
 
-Ws.channel("sensors", "SensorController");
+Ws.channel("chat", "chatController");
