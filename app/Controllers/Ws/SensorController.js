@@ -5,8 +5,8 @@ class SensorController {
     this.socket = socket;
     this.request = request;
   }
-  onSensorData(data) {
-    console.log(this.socket.id);
+  onMessage(sensorData) {
+    this.socket.broadcastToAll("sensorData", sensorData);
   }
 }
 

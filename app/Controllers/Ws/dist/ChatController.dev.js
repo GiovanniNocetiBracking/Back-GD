@@ -6,27 +6,27 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var SensorController =
+var ChatController =
 /*#__PURE__*/
 function () {
-  function SensorController(_ref) {
+  function ChatController(_ref) {
     var socket = _ref.socket,
         request = _ref.request;
 
-    _classCallCheck(this, SensorController);
+    _classCallCheck(this, ChatController);
 
     this.socket = socket;
     this.request = request;
   }
 
-  _createClass(SensorController, [{
+  _createClass(ChatController, [{
     key: "onMessage",
-    value: function onMessage(sensorData) {
-      this.socket.broadcastToAll("sensorData", sensorData);
+    value: function onMessage(message) {
+      this.socket.broadcastToAll("message", message);
     }
   }]);
 
-  return SensorController;
+  return ChatController;
 }();
 
-module.exports = SensorController;
+module.exports = ChatController;

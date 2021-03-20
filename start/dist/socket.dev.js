@@ -13,4 +13,5 @@
 */
 
 var Ws = use("Ws");
-Ws.channel("chat", "chatController");
+Ws.channel("chat", "ChatController");
+Ws.channel("sensor", "SensorController");
